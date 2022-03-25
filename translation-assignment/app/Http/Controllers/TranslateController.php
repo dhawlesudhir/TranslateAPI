@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GoogleTranslator;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class TranslateController extends Controller
@@ -11,12 +12,30 @@ class TranslateController extends Controller
 
     /**
      * Accepting Text and TargetLaguage code
+     * 1st Parameter - Getting GooleTranlator OBJ using service provider
+     * 2nd Parameter - Request
      * 
      * @return \Illuminate\Http\Response
      */
     public function index(GoogleTranslator $gt,Request $request)
     {  
-        return $gt->translate($request->input('text'),$request->input('translateTo'));
+        // storing request parameters into localVariables
+        $text = $request->input("text");
+        $translateTo = $request->input("translateTo");
+
+        //validation for TEXT
+            if($text == ''){
+                $failedResponse = [ 
+                    'success' => false,
+                    'error'   => 'Text not provided',
+                ];
+            return response()->json($failedResponse,400);   
+        }
+        //validating To language and if not provided deafult is Germany
+        $translateTo = $translateTo == '' ? "de" : $translateTo;
+
+        //replying back to client
+        return $gt->translate($text,$translateTo);
     }
 
     /**

@@ -40,17 +40,16 @@ class GoogleTranslator{
                 return response()->json($failedResponse,$curlcode);
             }
 
-        // if any reasone no translation value set/send by server
+        // IF Translation server does not provide value THEN deafult text
         $transalation = isset($response['data']['translations'][0]['translatedText']) ? $response['data']['translations'][0]['translatedText'] :'something went wrong while translating ...';
+        
         $successResponse = [ 
             'success' => True,
             'translation'   => $transalation ? $transalation :'something went wrong',
         ];
 
-        //
+        //replying to controller
         return response()->json($successResponse,$curlcode);    
-        // PROBLEM Facing , tried best but not sure why LANGUAGE response in array goes as below
-        // res exmaple - {"success":true,"translation":"\u0928\u092e\u0938\u094d\u0924\u0947"}
     }
 }
 
