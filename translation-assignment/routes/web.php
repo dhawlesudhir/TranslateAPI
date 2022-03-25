@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// removing web assess to Application
+// Route::get('/', function () {
+//     return view('welcome');
+// });
