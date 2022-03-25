@@ -49,7 +49,7 @@ class GoogleTranslator{
         ];
 
         //replying to controller
-        return response()->json($successResponse,$curlcode);    
+        return response()->json($successResponse,$curlcode,[],JSON_UNESCAPED_UNICODE);    
     }
 }
 
